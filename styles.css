@@ -1,0 +1,40 @@
+body {
+    color: white;
+    font-size: 45px;
+   
+    text-shadow: -1px 0 black, 0 1px black, 0 1px, 0 -1px black;
+    text-align: center; 
+    background-image: url("/Users/jamessweeney/code/SEIR-Ruth/unit_1/w08d1/project1/football1.jpg");
+ 
+  }
+ 
+ .button {
+    padding: 75px;
+    box-shadow: 2px 2px 4px black, -2px -2px 4px black;
+    
+ }
+ 
+ #modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    display: none;
+    z-index: 1;
+    font-size: 17px;
+    color: black;
+    text-shadow: none;
+ }
+ #modal-textbox {
+    background-color: white;
+    height: 350px;
+    width: 550px;
+    border-radius: 30px;
+    margin: 150px auto;
+    margin: 20px;
+    padding: 10px;
+ }
