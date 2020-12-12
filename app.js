@@ -139,7 +139,7 @@ $(() => {
   };
 
 
-  const player = new Human(70, 60, 50, 0, 80);
+  const player = new Human(80, 70, 60, 0, 80);
   
   const runBall = () => {
     player.runTheBall();
