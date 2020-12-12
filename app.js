@@ -3,7 +3,7 @@ $(() => {
     computerPick: null,
   };
   const $body = $('body');
-  const defensivePlays = [ 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+  const defensivePlays = [ 50, 60, 70, 80];
   
   const gameOver = () => {
     $body.empty();
@@ -139,7 +139,7 @@ $(() => {
   };
 
 
-  const player = new Human(75, 70, 60, 0, 80);
+  const player = new Human(70, 60, 50, 0, 80);
   
   const runBall = () => {
     player.runTheBall();
