@@ -2,13 +2,17 @@ $(() => {
   const computer = {
     computerPick: null,
   };
-
-  const defensivePlays = [45, 50, 35];
-
+  const $body = $('body');
+  const defensivePlays = [ 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+  
+  const gameOver = () => {
+    $body.empty();
+    const gameOverScreen = $('<h1>').addClass("game-over").text("YOU WIN.").appendTo($body);
+  }
   // Generate random computer value
   const computerPlay = () => {
     const randomIndex = Math.floor(Math.random() * defensivePlays.length);
-    computer.currentPick = 20;//defensivePlays[randomIndex];
+    computer.currentPick = defensivePlays[randomIndex];
   };
 
   class Human {
@@ -22,15 +26,13 @@ $(() => {
 
     moveTheChains(yardsMoved) {
       if (this.yardsToGo <= yardsMoved) {
-        //increment, decerement, end game
         this.yardsGained += this.yardsToGo;
-        this.yardsToGo = 0;
-        alert("You won the game!");
-        // TODO End the game
+        this.yardsToGo = 0; 
+        gameOver();  
       } else {
         this.yardsGained += yardsMoved;
-        this.yardsToGo -= yardsMoved;
-      }
+        this.yardsToGo -= yardsMoved; 
+    } 
     }
 
     runTheBall() {
@@ -38,21 +40,29 @@ $(() => {
       computerPlay();
       if (this.runStrength >= computer.currentPick) {
         this.moveTheChains(20);
-        alert("run the ball");
-      } else {
-        alert("Fumble. Game over!");
+        openModal();
+        $("#modal-textbox").empty();
+        $("#modal-textbox").text("You gained 20 yards");
+
+        } else  {
+        openModal();
+        $("#modal-textbox").empty();
+        $("#modal-textbox").text("FUMBLE!! The other team recovered the ball. GAME OVER!");
         // Reset the screen - Do you want to play again?
       }
     }
-
+    
     throwShort() {
-      // Generate random computer value
       computerPlay();
       if (this.shortAccuracy >= computer.currentPick) {
         this.moveTheChains(25);
-        alert("throw short");
-      } else {
-        alert("Interception. Game over!");
+        openModal();
+        $("#modal-textbox").empty();
+        $("#modal-textbox").text("Pass complete. Nice Pass! You gained 25 yards");
+        } else {
+        openModal();
+        $("#modal-textbox").empty();
+        $("#modal-textbox").text("INTERCEPTION! Game Over!");
         // Reset the screen - Do you want to play again?
       }
     }
@@ -61,10 +71,14 @@ $(() => {
       // Generate random computer value
       computerPlay();
       if (this.longAccuracy >= computer.currentPick) {
-        this.moveTheChains(35);
-        alert("Long pass");
+          openModal();
+        $("#modal-textbox").empty();
+        $("#modal-textbox").addClass("gameplay").text("Pass complete. Absolute BOMB! You gained 35 yards");
+          this.moveTheChains(35);
       } else {
-        alert("Interception. Game over!");
+        openModal();
+        $("#modal-textbox").empty();
+        $("#modal-textbox").text("INTERCEPTION! Game Over!");
         // Reset the screen - Do you want to play again?
       }
     }
@@ -73,34 +87,44 @@ $(() => {
   const $playGame = (event) => {
     event.preventDefault();
 
-    
-    
     $("#play").remove();
     $("#open-modal").remove();
     $("#title").remove();
     $("#subtitle").remove();
 
     const $runButton = $("<button>")
-      .text("Run the Ball")
+      .text("RUN THE BALL")
       .attr("id", "run")
       .addClass("button");
     $("form").append($runButton);
 
     const $shortButton = $("<button>")
-      .text("Throw it Short")
+      .text("THROW IT SHORT")
       .attr("id", "short")
       .addClass("button");
     $("form").append($shortButton);
 
     const $longButton = $("<button>")
-      .text("Throw it Deep")
+      .text("THROW IT DEEP")
       .attr("id", "deep")
       .addClass("button");
     $("form").append($longButton);
 
-  $("#run").on("click", runBall);
-  $("#short").on("click", throwShort);
-  $("#deep").on("click", throwDeep);
+    $("#run").on("click", () => {
+        runBall();
+        setTimeout(closeModal, 2000);
+      });
+    
+      $("#short").on("click", () => {
+        throwShort();
+        setTimeout(closeModal, 2000);
+      });
+    
+      $("#deep").on("click", () => {
+        throwDeep();
+        setTimeout(closeModal, 2000);
+      });
+    
   };
 
   const $openButton = $("#open-modal");
@@ -114,21 +138,24 @@ $(() => {
     $modal.css("display", "none");
   };
 
-  const player = new Human(60, 55, 40, 0, 80);
 
+  const player = new Human(75, 70, 60, 0, 80);
+  
   const runBall = () => {
     player.runTheBall();
   };
+  
   const throwShort = () => {
     player.throwShort();
   };
+  
   const throwDeep = () => {
     player.throwDeep();
   };
-
+  
   $openButton.on("click", openModal);
   $closeButton.on("click", closeModal);
 
-  $("#play").on("click", $playGame);
   
+  $("#play").on("click", $playGame);
 });
