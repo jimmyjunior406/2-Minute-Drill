@@ -5,9 +5,15 @@ $(() => {
   const $body = $('body');
   const defensivePlays = [ 50, 60, 70, 80];
   
-  const gameOver = () => {
+  const youWin = () => {
     $body.empty();
     const gameOverScreen = $('<h1>').addClass("game-over").text("YOU WIN.").appendTo($body);
+    window().reload();
+  }
+  const youLose = () => {
+        $body.empty();
+        const gameOverScreen = $('<h1>').addClass("game-over").text("Intercepted...You Lose.").appendTo($body);
+        window().reload()
   }
   // Generate random computer value
   const computerPlay = () => {
@@ -28,7 +34,7 @@ $(() => {
       if (this.yardsToGo <= yardsMoved) {
         this.yardsGained += this.yardsToGo;
         this.yardsToGo = 0; 
-        gameOver();  
+        youWin();  
       } else {
         this.yardsGained += yardsMoved;
         this.yardsToGo -= yardsMoved; 
@@ -48,7 +54,7 @@ $(() => {
         openModal();
         $("#modal-textbox").empty();
         $("#modal-textbox").text("FUMBLE!! The other team recovered the ball. GAME OVER!");
-        // Reset the screen - Do you want to play again?
+        youLose();
       }
     }
     
@@ -63,6 +69,8 @@ $(() => {
         openModal();
         $("#modal-textbox").empty();
         $("#modal-textbox").text("INTERCEPTION! Game Over!");
+        youLose();
+        
         // Reset the screen - Do you want to play again?
       }
     }
@@ -79,7 +87,7 @@ $(() => {
         openModal();
         $("#modal-textbox").empty();
         $("#modal-textbox").text("INTERCEPTION! Game Over!");
-        // Reset the screen - Do you want to play again?
+        youLose();
       }
     }
   }
